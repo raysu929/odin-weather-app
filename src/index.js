@@ -13,8 +13,6 @@ async function getWeather(location) {
 return data;
 }
 
-getWeather('South Africa');
-
  function weatherData(data){
   const weather = {
     location: data.resolvedAddress,
@@ -33,3 +31,19 @@ async function main() {
 }
 
 main()
+
+const container = document.getElementById("container");
+const form = document.createElement("form");
+const locationInput = document.createElement("input");
+locationInput.type = "text";
+locationInput.placeholder = "Enter your location";
+const submitBtn = document.createElement("input");
+submitBtn.type = "submit";
+
+submitBtn.addEventListener("click", async (e) => {
+e.preventDefault();
+  const data = await getWeather(locationInput.value);
+  console.log(data);
+})
+container.appendChild(form);
+form.append(locationInput, submitBtn);
