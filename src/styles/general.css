@@ -8,7 +8,15 @@
 
 body {
   line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: url('.././pictures/cuteSky.jpg');
+    background-size: cover;       
+  background-position: center;  
+  background-repeat: no-repeat;
+  height: 100vh;
 }
 
 

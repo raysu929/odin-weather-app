@@ -54,12 +54,13 @@ const container = document.getElementById("container");
 const form = document.createElement("form");
 const locationInput = document.createElement("input");
 locationInput.type = "text";
+locationInput.classList.add('location');
 locationInput.placeholder = "Enter your location";
 const submitBtn = document.createElement("input");
 submitBtn.type = "submit";
+submitBtn.classList.add("submit")
 const result = document.createElement("div");
-container.appendChild(result);
-
+result.classList.add("result")
 submitBtn.addEventListener("click", async (e) => {
   e.preventDefault();
   const data = await getWeather(locationInput.value);
@@ -74,9 +75,11 @@ submitBtn.addEventListener("click", async (e) => {
 
  const gifUrl = await getWeatherGif(processed.conditions);
  const img = document.createElement("img");
+ img.classList.add('image')
  img.src = gifUrl;
  img.alt = processed.conditions + " GIF";
  result.appendChild(img);
 });
 container.appendChild(form);
 form.append(locationInput, submitBtn);
+container.appendChild(result);
