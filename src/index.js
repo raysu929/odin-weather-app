@@ -18,7 +18,7 @@ function weatherData(data) {
     currentTemp: data.currentConditions.temp,
     conditions: data.currentConditions.conditions,
     humidity: data.currentConditions.humidity,
-    date: data.currentConditions.datetime,
+    dateEpoch: data.currentConditions.datetimeEpoch,
   };
   return weather;
 }
@@ -73,6 +73,17 @@ submitBtn.addEventListener("click", async (e) => {
   try {
   const data = await getWeather(locationInput.value);
   const processed = weatherData(data);
+const formattedDate = new Date(processed.dateEpoch * 1000).toLocaleString(
+  "en-US",
+  {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }
+);
 
   loadingDiv.style.display = "none";
 
@@ -81,7 +92,7 @@ submitBtn.addEventListener("click", async (e) => {
     <p><strong>Temperature:</strong> ${processed.currentTemp}°C</p>
     <p><strong>Conditions:</strong> ${processed.conditions}</p>
     <p><strong>Humidity:</strong> ${processed.humidity}%</p>
-    <p><strong>Date:</strong> ${processed.date}</p>
+    <p><strong>Date:</strong> ${formattedDate}</p>
   `;
 
  const gifUrl = await getWeatherGif(processed.conditions);
