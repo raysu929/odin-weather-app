@@ -60,11 +60,22 @@ const submitBtn = document.createElement("input");
 submitBtn.type = "submit";
 submitBtn.classList.add("submit")
 const result = document.createElement("div");
-result.classList.add("result")
+result.classList.add("result");
+const loadingDiv = document.createElement("div");
+loadingDiv.innerText = "Loading...";
+loadingDiv.style.display = "none";
+loadingDiv.classList.add("loading")
+
 submitBtn.addEventListener("click", async (e) => {
   e.preventDefault();
+  loadingDiv.style.display = "block";
+  result.textContent = '';
+  try {
   const data = await getWeather(locationInput.value);
   const processed = weatherData(data);
+
+  loadingDiv.style.display = "none";
+
   result.innerHTML = `
    <h2>${processed.location}</h2>
     <p><strong>Temperature:</strong> ${processed.currentTemp}°C</p>
@@ -79,7 +90,13 @@ submitBtn.addEventListener("click", async (e) => {
  img.src = gifUrl;
  img.alt = processed.conditions + " GIF";
  result.appendChild(img);
+  } catch (error){
+    loadingDiv.style.display = "none";
+    result.textContent = "Error fetching weather data.";
+    console.error(error);
+  }
 });
 container.appendChild(form);
 form.append(locationInput, submitBtn);
 container.appendChild(result);
+container.appendChild(loadingDiv);
